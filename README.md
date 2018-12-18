@@ -1,2 +1,7 @@
 # Chatify
-MERN stack app
+MERN stack app, Javascript full stack application
+
+M - MongoDb
+E - Express
+R - React
+N - Node
