@@ -5,3 +5,4 @@ M - MongoDb
 E - Express
 R - React
 N - Node
+Add git auth 
