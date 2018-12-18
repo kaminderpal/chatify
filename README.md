@@ -1,2 +1,2 @@
-# chatify
+# Chatify
 MERN stack app
