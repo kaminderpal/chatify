@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const server = http.createServer(app);
 const socketIO = require('socket.io');
 const compression = require('compression')
+const helmet = require('helmet');
 
 const PORT = process.env.PORT || 5000;
 const API_VERSION = "api/v1.0.0";
@@ -18,8 +19,10 @@ require('./sockets/socketIO')(io);
 
 //middleware
 require('./logging/log');
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(compression());
+
 app.use(passport.initialize());
 require('./middleware/passport')(passport);
 
