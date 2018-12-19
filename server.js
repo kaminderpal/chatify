@@ -4,10 +4,16 @@ const path = require('path');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const server = http.createServer(app);
-var compression = require('compression')
+const socketIO = require('socket.io');
+const compression = require('compression')
 
 const PORT = process.env.PORT || 5000;
 const API_VERSION = "api/v1.0.0";
+
+
+//sockets
+let io = socketIO(server);
+require('./sockets/socketIO')(io);
 
 
 //middleware
