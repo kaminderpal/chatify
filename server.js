@@ -17,6 +17,7 @@ require('./sockets/socketIO')(io);
 
 
 //middleware
+require('./logging/log');
 app.use(bodyParser.json());
 app.use(compression());
 app.use(passport.initialize());
