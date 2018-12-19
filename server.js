@@ -22,9 +22,9 @@ require('./logging/log');
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(compression());
-
 app.use(passport.initialize());
 require('./middleware/passport')(passport);
+app.use(cors());
 
 app.get("/",(req,res)=>{
      res.sendFile(path.resolve(__dirname,"client/index.html"));
