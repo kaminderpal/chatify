@@ -4,6 +4,7 @@ const path = require('path');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const server = http.createServer(app);
+var compression = require('compression')
 
 const PORT = process.env.PORT || 5000;
 const API_VERSION = "api/v1.0.0";
@@ -11,6 +12,7 @@ const API_VERSION = "api/v1.0.0";
 
 //middleware
 app.use(bodyParser.json());
+app.use(compression());
 app.use(passport.initialize());
 require('./middleware/passport')(passport);
 
