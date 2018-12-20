@@ -2,5 +2,6 @@ module.exports = {
     secretKey            : "",
     MONGOLAB_URI         :"",
     googleClientID       : "",
-    googleClientSecret   : "" 
+    googleClientSecret   : "",
+    secretKey : "chatifyNodemedia" 
 };

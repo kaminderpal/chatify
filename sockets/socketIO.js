@@ -1,4 +1,4 @@
-const {generateMessage} = require('../utils/message')
+const {generateMessage} = require("../util/message");
 const Message = require('../database/Queries/message')
 
 module.exports =  function(io){    

@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const keys = require('../config/keys');
 const jwt = require('jsonwebtoken')
 const {RegisterModel} = require('../database/Models/register')
 
@@ -8,7 +9,7 @@ const authenticate = async (req,res,next) => {
           return Promise.reject(new Error("No token provided."))
      }
      try{
-          const user = jwt.verify(token,"chat123");
+          const user = jwt.verify(token,keys.secretKey);
           req.token = token;
           req.user = user;
           next();

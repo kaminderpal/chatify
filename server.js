@@ -3,13 +3,15 @@ const http = require('http');
 const path = require('path');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const server = http.createServer(app);
 const socketIO = require('socket.io');
 const compression = require('compression')
 const helmet = require('helmet');
 
 const PORT = process.env.PORT || 5000;
-const API_VERSION = "api/v1.0.0";
+const API_VERSION = "/api/v1.0.0/";
 
 
 //sockets
