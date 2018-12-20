@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component,Fragment } from 'react'
+import Router from './router';
 
 export class App extends Component {
   render() {
     return (
-      <div>
-        <h1>Welcome to Chatify</h1>
-      </div>
+      <Fragment>
+        <Router/>
+      </Fragment>
     )
   }
 }
