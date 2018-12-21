@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component,Fragment } from 'react'
+import Login from '../../Components/Login/login';
 
 export class Home extends Component {
   render() {
     return (
-      <div>
-        <h3>Home</h3>
-      </div>
+      <Fragment>
+        <Login />
+      </Fragment>
     )
   }
 }

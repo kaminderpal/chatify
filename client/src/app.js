@@ -7,7 +7,7 @@ import React, { Component,Fragment } from 'react';
 import Router from './router';
 import { Provider } from 'react-redux';
 import store from './store';
-
+import {withStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -21,8 +21,9 @@ library.add(fab,faDesktop, faChartBar,faGlobeAmericas,faShoppingCart,faQuoteLeft
 
 const theme = createMuiTheme({
   palette: {
-    primary: {main : "#2c3e50",contrastText: '#fff'}, 
-    secondary: { main : "#51CCA8" ,contrastText : "#d4f2e9"  }, 
+    primary: {
+              main : "#B3E5FC"
+          }
   },
   typography: {
     useNextVariants: true,
@@ -41,20 +42,27 @@ const theme = createMuiTheme({
   }
 });
 
+const styles =  {
+                  '@global' : {
+                                'html,body,#root' : {
+                                  height : '100%'
+                                }
+                  }
+};
 
 export class App extends Component {
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <Provider store={store}>
-          <Fragment>
-            <CssBaseline/>
-            <Router/>
-          </Fragment>
-        </Provider>
-      </MuiThemeProvider>
+      <Provider store={store}> 
+        <MuiThemeProvider theme={theme}>
+            <Fragment>
+              <CssBaseline/>
+              <Router/>
+            </Fragment>
+        </MuiThemeProvider>
+      </Provider>
     )
   }
 }
 
-export default App
+export default withStyles(styles)(App)
