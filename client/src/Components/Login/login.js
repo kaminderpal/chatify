@@ -3,8 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import {Grid,Card,CardContent, TextField,Fab} from '@material-ui/core'
 import Header from '../../Helpers/header';
 import PropTypes from 'prop-types';
-
-
+import { connect } from 'react-redux';
+import { attemptLogin, login } from '../../Redux/Actions/login'
 const loginFormStyles = theme => ({
      root : {
           flexGrow : 1,
@@ -41,39 +41,113 @@ const loginFormStyles = theme => ({
 
 
 export class Login extends Component {
-  render() {
-     const {classes} = this.props;
-     return (
-          <Grid container={true} direction="row" justify="center" alignItems="center" className={classes.root}>
-               <Grid item xs={12} sm={8} md={6} lg={4}> 
-                    <Card className={classes.card} raised={true}>
-                         <CardContent className={classes.formCardContent} >
-                              <Header variant="h4" color="inherit"> Login </Header>
-                              <form  className={classes.form} >
-                                   <TextField
-                                             fullWidth
-                                             id="loginEmail"
-                                             type="email"
-                                             label="Email"
-                                             margin="normal"
-                                   />
-                                   <TextField
-                                             fullWidth
-                                             id="loginPassword"
-                                             type="password"
-                                             label="Password"
-                                             margin="normal"
-                                   />
-                                   <Fab variant="extended" color="secondary" aria-label="Delete" className={classes.fab} >
-                                        Login
-                                   </Fab>
-                              </form>
-                         </CardContent>
-                    </Card>
+
+     state = {
+          email : "",
+          password : "",
+          errors : {
+               emailErrorText : "",
+               passwordErrorText : ""
+          }
+     }
+     getInitialErrorState(){
+          return {
+               emailErrorText : "",
+               passwordErrorText : ""
+          }
+     }
+     handleChange = (e) => {
+          this.setState( {   [ e.target.name] : e.target.value  } );
+     }
+     validate () {
+          const {email,password} = this.state;
+          let errors = this.getInitialErrorState();
+          let isValid = true;
+
+          if( !email.length ){
+               isValid = false;
+               errors['emailErrorText'] = "Please enter email address."
+          }
+          if(email.length){
+               const  pattern =  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+               if( !pattern.test(email) ){
+                    isValid = false;
+                    errors['emailErrorText'] = "Please enter valid Email Address."
+               }
+          }
+          if( !password.length ){
+               isValid = false;
+               errors['passwordErrorText'] = "Please enter your password";
+          }
+
+          this.setState({  errors  });
+          return isValid;
+     }
+     handleSubmit = (e) => {
+          if(this.validate()){
+               
+               console.log(this.props);
+               this.props.attemptLogin();
+               this.props.login();
+               
+               console.log(this.state);
+          }
+     }
+     render() {
+          const {classes} = this.props;
+          const { email,password,errors } = this.state;
+          return (
+               <Grid container={true} direction="row" justify="center" alignItems="center" className={classes.root}>
+                    <Grid item xs={12} sm={8} md={6} lg={4}> 
+                         <Card className={classes.card} raised={true}>
+                              <CardContent className={classes.formCardContent} >
+                                   <Header variant="h4" color="inherit"> Login </Header>
+                                   <form  className={classes.form} >
+                                        <TextField
+                                                  fullWidth
+                                                  id="loginEmail"
+                                                  type="email"
+                                                  name="email"
+                                                  label="Email"
+                                                  margin="normal"
+                                                  value={email}
+                                                  onChange={this.handleChange}
+                                                  error={errors.emailErrorText.length ? true : false}
+                                                  required={true}
+                                                  helperText= {errors.emailErrorText}
+                                        />
+                                        <TextField
+                                                  fullWidth
+                                                  id="loginPassword"
+                                                  type="password"
+                                                  name="password"
+                                                  label="Password"
+                                                  margin="normal"
+                                                  value={password}
+                                                  onChange={this.handleChange}
+                                                  error={errors.passwordErrorText.length ? true : false}
+                                                  required ={true}
+                                                  helperText= {errors.passwordErrorText}
+                                        />
+                                        <Fab variant="extended" color="secondary" aria-label="Delete" className={classes.fab} onClick={()=>this.handleSubmit()}>
+                                             Login
+                                        </Fab>
+                                   </form>
+                              </CardContent>
+                         </Card>
+                    </Grid>
                </Grid>
-          </Grid>
-    )
-  }
+          )
+     }
 }
 
-export default withStyles(loginFormStyles)(Login)
+Login.propTypes = {
+     classes: PropTypes.object.isRequired,
+}
+const mapStateToProps = (state,ownProps) => ({
+     result : state.login.result,
+     isAuthenticated : state.login.isAuthenticated,
+     isAuthenticating : state.login.isAuthenticating
+})
+
+export default connect( mapStateToProps, { attemptLogin,login } )( withStyles(loginFormStyles)(Login) )
