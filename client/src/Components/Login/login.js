@@ -5,6 +5,9 @@ import Header from '../../Helpers/header';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { attemptLogin, login } from '../../Redux/Actions/login'
+import * as Utils from '../../Helpers/util';
+
+
 const loginFormStyles = theme => ({
      root : {
           flexGrow : 1,
@@ -69,11 +72,11 @@ export class Login extends Component {
                errors['emailErrorText'] = "Please enter email address."
           }
           if(email.length){
-               const  pattern =  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-               if( !pattern.test(email) ){
+               if( !Utils.testEmailPattern(email)){
                     isValid = false;
                     errors['emailErrorText'] = "Please enter valid Email Address."
                }
+               
           }
           if( !password.length ){
                isValid = false;
@@ -85,12 +88,8 @@ export class Login extends Component {
      }
      handleSubmit = (e) => {
           if(this.validate()){
-               
-               console.log(this.props);
                this.props.attemptLogin();
                this.props.login();
-               
-               console.log(this.state);
           }
      }
      render() {
