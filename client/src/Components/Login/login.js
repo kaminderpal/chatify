@@ -1,12 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import {Grid,Card,CardContent, TextField,Fab} from '@material-ui/core'
+import {Grid,Card,CardContent, TextField,Fab,CardActions,Typography} from '@material-ui/core'
+import {display} from '@material-ui/system';
+import classnames from 'classnames';
 import Header from '../../Helpers/header';
 import PropTypes from 'prop-types';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import green from '@material-ui/core/colors/green';
 import { connect } from 'react-redux';
 import { attemptLogin, login } from '../../Redux/Actions/login'
 import * as Utils from '../../Helpers/util';
-
 
 const loginFormStyles = theme => ({
      root : {
@@ -22,7 +26,7 @@ const loginFormStyles = theme => ({
           alignItems : 'center'
      },
      fab: {
-          marginTop: theme.spacing.unit * 5,
+          marginTop: theme.spacing.unit * 4,
           marginBottom : theme.spacing.unit *2,
           width : '40%'
      },
@@ -35,11 +39,36 @@ const loginFormStyles = theme => ({
           marginLeft: -12,
      },
      formCardContent :{
-          padding : '2rem !important',
+          padding : '2rem',
+          paddingBottom : '0rem',
           [theme.breakpoints.down('xs')] : {
                padding : '1rem !important',
           }
      },
+     buttonProgress: {
+          color: green[500],
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          marginTop: -12,
+          marginLeft: -12,
+     },
+     cardAction : {
+          padding : '1.5rem',
+          justifyContent : "center"
+     },
+     cardActionP :{
+          marginRight : '5px'
+     },
+     errorWrapper : {
+          marginTop : theme.spacing.unit * 2
+     },
+     displayBlock : {
+          display : 'block'
+     },
+     displayNone : {
+          display : 'none'
+     }
 });
 
 
@@ -72,11 +101,10 @@ export class Login extends Component {
                errors['emailErrorText'] = "Please enter email address."
           }
           if(email.length){
-               if( !Utils.testEmailPattern(email)){
+               if(!Utils.testEmailPattern(email)){
                     isValid = false;
                     errors['emailErrorText'] = "Please enter valid Email Address."
                }
-               
           }
           if( !password.length ){
                isValid = false;
@@ -89,12 +117,16 @@ export class Login extends Component {
      handleSubmit = (e) => {
           if(this.validate()){
                this.props.attemptLogin();
-               this.props.login();
+               this.props.login( { "email" : this.state.email,"password" : this.state.password } );
           }
      }
+     handleError = (error) => {
+         return !error ? false : true
+     }
      render() {
-          const {classes} = this.props;
+          const {classes,isAuthenticating,error_message} = this.props;
           const { email,password,errors } = this.state;
+          
           return (
                <Grid container={true} direction="row" justify="center" alignItems="center" className={classes.root}>
                     <Grid item xs={12} sm={8} md={6} lg={4}> 
@@ -128,11 +160,17 @@ export class Login extends Component {
                                                   required ={true}
                                                   helperText= {errors.passwordErrorText}
                                         />
-                                        <Fab variant="extended" color="secondary" aria-label="Delete" className={classes.fab} onClick={()=>this.handleSubmit()}>
-                                             Login
+                                        <Typography component="p" align="left"  className={ `${classes.errorWrapper}  ${ ()=>this.handleError(error_message)  ? classes.displayBlock : classes.displayNone }`  } color="secondary"> { error_message }  </Typography>
+                                        <Fab variant="extended" color="secondary" disabled={isAuthenticating} aria-label="Delete" className={classes.fab} onClick={()=>this.handleSubmit()}>
+                                             Login  { isAuthenticating && <CircularProgress size={24} className={classes.buttonProgress} />}
                                         </Fab>
                                    </form>
+
                               </CardContent>
+                              <CardActions className={classes.cardAction}>
+                                   <Typography variant="body1" className={classes.cardActionP}> Not a member yet, Please </Typography> 
+                                   <Typography component={NavLink} variant="body1" to="/register" > Register </Typography>
+                              </CardActions>
                          </Card>
                     </Grid>
                </Grid>
@@ -146,7 +184,8 @@ Login.propTypes = {
 const mapStateToProps = (state,ownProps) => ({
      result : state.login.result,
      isAuthenticated : state.login.isAuthenticated,
-     isAuthenticating : state.login.isAuthenticating
+     isAuthenticating : state.login.isAuthenticating,
+     error_message : state.login.error_message
 })
 
 export default connect( mapStateToProps, { attemptLogin,login } )( withStyles(loginFormStyles)(Login) )
