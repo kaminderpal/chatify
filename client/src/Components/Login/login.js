@@ -113,7 +113,7 @@ export class Login extends Component {
          return !error ? false : true
      }
      render() {
-          const {classes,isAuthenticating,error_message} = this.props;
+          const {classes,isAuthenticating,errorMessage} = this.props;
           const { email,password,errors } = this.state;
           
           return (
@@ -149,7 +149,7 @@ export class Login extends Component {
                                                   required ={true}
                                                   helperText= {errors.passwordErrorText}
                                         />
-                                        <Typography component="p" align="left"  className={ `${classes.errorWrapper}  ${ ()=>this.handleError(error_message)  ? classes.displayBlock : classes.displayNone }`  } color="secondary"> { error_message }  </Typography>
+                                        <Typography component="p" align="left"  className={ `${classes.errorWrapper}  ${ ()=>this.handleError(errorMessage)  ? classes.displayBlock : classes.displayNone }`  } color="secondary"> { errorMessage }  </Typography>
                                         <Fab variant="extended" color="secondary" disabled={isAuthenticating} aria-label="Delete" className={classes.fab} onClick={()=>this.handleSubmit()}>
                                              Login  { isAuthenticating && <CircularProgress size={24} className={classes.buttonProgress} />}
                                         </Fab>
@@ -174,7 +174,7 @@ const mapStateToProps = (state,ownProps) => ({
      result : state.login.result,
      isAuthenticated : state.login.isAuthenticated,
      isAuthenticating : state.login.isAuthenticating,
-     error_message : state.login.error_message
+     errorMessage : state.login.errorMessage
 })
 
 export default connect( mapStateToProps, { attemptLogin,login } )( withStyles(loginFormStyles)(Login) )
