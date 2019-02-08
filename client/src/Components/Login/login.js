@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import {Grid,Card,CardContent, TextField,Fab,CardActions,Typography} from '@material-ui/core'
-import {display} from '@material-ui/system';
-import classnames from 'classnames';
 import Header from '../../Helpers/header';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import green from '@material-ui/core/colors/green';
 import { connect } from 'react-redux';
 import { attemptLogin, login } from '../../Redux/Actions/login'
 import * as Utils from '../../Helpers/util';
@@ -44,14 +41,6 @@ const loginFormStyles = theme => ({
           [theme.breakpoints.down('xs')] : {
                padding : '1rem !important',
           }
-     },
-     buttonProgress: {
-          color: green[500],
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          marginTop: -12,
-          marginLeft: -12,
      },
      cardAction : {
           padding : '1.5rem',
