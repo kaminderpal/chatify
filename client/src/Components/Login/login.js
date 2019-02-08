@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect } from 'react-redux';
 import { attemptLogin, login } from '../../Redux/Actions/login'
 import * as Utils from '../../Helpers/util';
-
+import green from '@material-ui/core/colors/green';
 const loginFormStyles = theme => ({
      root : {
           flexGrow : 1,
@@ -28,7 +28,7 @@ const loginFormStyles = theme => ({
           width : '40%'
      },
      buttonProgress :{
-          color: theme.palette.primary.main,
+          color: green[500],
           position: 'absolute',
           top: '50%',
           left: '50%',
