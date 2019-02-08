@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import {Grid,Card,CardContent, TextField,Fab} from '@material-ui/core'
+import {Grid,Card,CardContent, CardActions,TextField,Fab,Typography} from '@material-ui/core'
 import Header from '../../Helpers/header';
 import PropTypes from 'prop-types';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import * as Utils from '../../Helpers/util';
+import { connect } from 'react-redux';
+import { attemptRegister, register } from '../../Redux/Actions/register';
+
+
+
 
 const styles = theme => ({
      root : {
@@ -36,6 +44,23 @@ const styles = theme => ({
                padding : '1rem !important',
           }
      },
+     cardAction : {
+          padding : '1.5rem',
+          paddingTop:0,
+          justifyContent : "center"
+     },
+     cardActionP :{
+          marginRight : '5px'
+     },
+     errorWrapper : {
+          marginTop : theme.spacing.unit * 2
+     },
+     displayBlock : {
+          display : 'block'
+     },
+     displayNone : {
+          display : 'none'
+     }
 });
 
 
@@ -55,8 +80,14 @@ export class Register extends Component {
                confirmPasswordErrorText : ""
           }
      }
+     handleSubmit = (e) => {
+          if(this.validate()){
+               // this.props.attemptLogin();
+               // this.props.login( { "email" : this.state.email,"password" : this.state.password } );
+          }
+     }
   render() {
-       const { classes } = this.props;
+       const {classes,isRegistering,errorMessage} = this.props;
        const {email,password,username,confirmPassword,errors} = this.state;
     return (
      <Grid container={true} direction="row" justify="center" alignItems="center" className={classes.root}>
@@ -117,11 +148,16 @@ export class Register extends Component {
                                    required ={true}
                                    helperText= {errors.confirmPasswordErrorText}
                          />
-                         <Fab variant="extended" color="secondary" aria-label="Delete" className={classes.fab} onClick={()=>this.handleSubmit()}>
-                              Register
+                         <Typography component="p" align="left"  className={ `${classes.errorWrapper}  ${ ()=>this.handleError(errorMessage)  ? classes.displayBlock : classes.displayNone }`  } color="secondary"> { errorMessage }  </Typography>
+                         <Fab variant="extended" color="secondary" disabled={isRegistering} aria-label="Delete" className={classes.fab} onClick={()=>this.handleSubmit()}>
+                              Register  { isRegistering && <CircularProgress size={24} className={classes.buttonProgress} />}
                          </Fab>
                     </form>
                </CardContent>
+               <CardActions className={classes.cardAction}>
+                    <Typography variant="body1" className={classes.cardActionP}> Already member, Please </Typography> 
+                    <Typography component={NavLink} variant="body1" to="/login" > Login </Typography>
+               </CardActions>
           </Card>
      </Grid>
 </Grid>
@@ -132,5 +168,11 @@ export class Register extends Component {
 Register.propTypes = {
      classes : PropTypes.object.isRequired
 };
-
-export default withStyles(styles)(Register)
+const mapStateToProps = (state,ownProps) => ({
+     result : state.register.result,
+     isRegistered : state.register.isRegistered,
+     isRegistering : state.register.isRegistering,
+     errorMessage : state.register.errorMessage
+})
+//connect props to redux dispatchers.
+export default connect( mapStateToProps, { attemptRegister, register  } )( withStyles(styles)(Register) )

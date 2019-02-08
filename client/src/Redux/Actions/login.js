@@ -16,6 +16,7 @@ export const login = (data) => dispatch => {
           payload : user,
      }))
      .catch(error=> dispatch({
-          type : LOGIN_FAIL
+          type : LOGIN_FAIL,
+          payload : error.response.data
      }));
 }
