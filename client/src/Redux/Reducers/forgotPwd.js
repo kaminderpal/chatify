@@ -10,7 +10,7 @@ export default function( state = {
           case FORGOTPWD_STARTED : 
                return { ...state , isAuthenticating : true };
           case FORGOTPWD_SUCCESS : //#endregion
-               return { ...state, result : action.payload, isAuthenticated : true , isAuthenticating : false }
+               return { ...state, result : action.payload, isAuthenticated : true , isAuthenticating : false,errorMessage : "" }
           case FORGOTPWD_FAIL :
                return { ...state, result : [], errorMessage : action.payload.message, isAuthenticated : false , isAuthenticating : false }
           default : 
