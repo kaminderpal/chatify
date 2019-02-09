@@ -19,13 +19,14 @@ const loginFormStyles = theme => ({
      },
      form : {
           display :'flex',
-          flexDirection :'column',
-          alignItems : 'center'
+          flexDirection :'column'
      },
      fab: {
           marginTop: theme.spacing.unit * 4,
           marginBottom : theme.spacing.unit *2,
-          width : '40%'
+          width : '40%',
+          marginLeft : 'auto',
+          marginRight : 'auto'
      },
      buttonProgress :{
           color: green[500],
@@ -57,6 +58,9 @@ const loginFormStyles = theme => ({
      },
      displayNone : {
           display : 'none'
+     },
+     linkWrapper : {
+          marginTop : '1rem'
      }
 });
 
@@ -112,10 +116,10 @@ export class Login extends Component {
      handleError = (error) => {
          return !error ? false : true
      }
+   
      render() {
           const {classes,isAuthenticating,errorMessage} = this.props;
           const { email,password,errors } = this.state;
-          
           return (
                <Grid container={true} direction="row" justify="center" alignItems="center" className={classes.root}>
                     <Grid item xs={12} sm={8} md={6} lg={4}> 
@@ -149,7 +153,8 @@ export class Login extends Component {
                                                   required ={true}
                                                   helperText= {errors.passwordErrorText}
                                         />
-                                        <Typography component="p" align="left"  className={ `${classes.errorWrapper}  ${ ()=>this.handleError(errorMessage)  ? classes.displayBlock : classes.displayNone }`  } color="secondary"> { errorMessage }  </Typography>
+                                        <Typography align="right" component={NavLink} className={classes.linkWrapper} variant="body1" to="/forgotpassword" > Forgot Password? </Typography>
+                                        <Typography component="p" align="center"  className={ `${classes.errorWrapper}  ${ this.handleError(errorMessage)  ? classes.displayBlock : classes.displayNone }`  } color="secondary"> { errorMessage }  </Typography>
                                         <Fab variant="extended" color="secondary" disabled={isAuthenticating} aria-label="Delete" className={classes.fab} onClick={()=>this.handleSubmit()}>
                                              Login  { isAuthenticating && <CircularProgress size={24} className={classes.buttonProgress} />}
                                         </Fab>

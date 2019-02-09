@@ -10,7 +10,7 @@ export default function( state = {
           case LOGIN_STARTED : 
                return { ...state , isAuthenticating : true };
           case LOGIN_SUCCESS : //#endregion
-               return { ...state, result : action.payload, isAuthenticated : true , isAuthenticating : false }
+               return { ...state, result : action.payload, isAuthenticated : true , isAuthenticating : false,errorMessage:"" }
           case LOGIN_FAIL :
                return { ...state, result : [], errorMessage : action.payload.message, isAuthenticated : false , isAuthenticating : false }
           default : 
