@@ -10,7 +10,7 @@ export default function( state = {
           case REGISTER_STARTED : 
                return { ...state , isRegistering : true };
           case REGISTER_SUCCESS : //#endregion
-               return { ...state, result : action.payload, isRegistered : true , isRegistering : false }
+               return { ...state, result : action.payload, isRegistered : true , isRegistering : false,errorMessage : "" }
           case REGISTER_FAIL :
                return { ...state, result : [], errorMessage : action.payload.message, isRegistered : false , isRegistering : false }
           default : 
