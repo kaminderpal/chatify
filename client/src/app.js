@@ -22,7 +22,7 @@ library.add(fab,faDesktop, faChartBar,faGlobeAmericas,faShoppingCart,faQuoteLeft
 const theme = createMuiTheme({
   palette: {
     primary: {
-              main : "#B3E5FC"
+              main : "#2196f3"
           }
   },
   typography: {
