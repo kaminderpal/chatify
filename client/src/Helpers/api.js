@@ -5,7 +5,8 @@ const API = (() => {
      return {
                URL_LOGIN     : `${serverAddr}${version}/login`,
                URL_REGISTER  : `${serverAddr}${version}/register`,
-               URL_FORGOTPWD : `${serverAddr}${version}/forgotpassword`
+               URL_FORGOTPWD : `${serverAddr}${version}/forgotpassword`,
+               URL_RESETPWD  : `${serverAddr}${version}/resetpassword`
      };
 })();
 export { API };

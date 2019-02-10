@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux';
-import loginReducer from './Reducers/login'
-import registerReducer from "./Reducers/register";
+import login from './Reducers/login'
+import register from "./Reducers/register";
 import forgotPwd from './Reducers/forgotPwd';
+import resetPwd from './Reducers/resetPwd';
+
 
 
 export default combineReducers({
-     login : loginReducer,
-     register : registerReducer,
-     forgotPwd : forgotPwd
+     login,
+     register, 
+     forgotPwd, 
+     resetPwd
 });
