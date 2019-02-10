@@ -20,7 +20,8 @@ const styles = theme => ({
    form : {
         display :'flex',
         flexDirection :'column',
-        alignItems : 'center'
+        alignItems : 'center',
+        marginTop: '30px'
    },
    fab: {
         marginTop: theme.spacing.unit * 4,
@@ -87,17 +88,17 @@ export class ForgotPwd extends Component {
             errors['emailErrorText'] = "Please enter email address."
         }
         if(email.length){
-                if(!Utils.testEmailPattern(email)){
-                    isValid = false;
-                    errors['emailErrorText'] = "Please enter valid Email Address."
-                }
+            if(!Utils.testEmailPattern(email)){
+                isValid = false;
+                errors['emailErrorText'] = "Please enter valid Email Address."
+            }
         }
         this.setState({  errors  });
         return isValid;
     }
 
   render() {
-    const {classes,isAuthenticating,errorMessage} = this.props;
+    const {classes,isAuthenticating,errorMessage,successMessage} = this.props;
     const {email,errors} = this.state;
     return (
       <Grid container={true} direction="row" justify="center" alignItems="center" className={classes.root}>
@@ -119,9 +120,10 @@ export class ForgotPwd extends Component {
                                     required={true}
                                     helperText= {errors.emailErrorText}
                         />
+                        <Typography component="p" align="left"  className={ `${classes.errorWrapper}  ${ ()=>this.handleError(successMessage)  ? classes.displayBlock : classes.displayNone }`  } color="secondary"> { successMessage }  </Typography>
                         <Typography component="p" align="left"  className={ `${classes.errorWrapper}  ${ ()=>this.handleError(errorMessage)  ? classes.displayBlock : classes.displayNone }`  } color="secondary"> { errorMessage }  </Typography>
                         <Fab variant="extended" color="secondary" disabled={isAuthenticating} aria-label="Delete" className={classes.fab} onClick={()=>this.handleSubmit()}>
-                                Forgot Password  { isAuthenticating && <CircularProgress size={24} className={classes.buttonProgress} />}
+                               Submit  { isAuthenticating && <CircularProgress size={24} className={classes.buttonProgress} />}
                         </Fab>
                     </form>
 
@@ -139,7 +141,8 @@ const mapStateToProps = (state,ownProps) => ({
     result : state.forgotPwd.result,
     isAuthenticated : state.forgotPwd.isAuthenticated,
     isAuthenticating : state.forgotPwd.isAuthenticating,
-    errorMessage : state.forgotPwd.errorMessage
+    errorMessage : state.forgotPwd.errorMessage,
+    successMessage : state.forgotPwd.successMessage
 })
 
 export default connect( mapStateToProps, { attemptForgotPwd, submitForgotPwd } )( withStyles(styles)(ForgotPwd) )
