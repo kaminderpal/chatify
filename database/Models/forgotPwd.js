@@ -7,8 +7,23 @@ let forgotPwdSchema = new mongoose.Schema({
         minlength : 1,
         maxlength : 500,
         trim : true
+    },
+    token : {
+        required : true,
+        type : String,
+        minlength : 12,
+        trim : true
+    },
+    verified : {
+        required : true,
+        type : Boolean,
+        default : false
+    },
+    createdAt : {
+        required : true,
+        type : String
     }
 });
 
-const forgotPwdModel = mongoose.model('ForgotPwd',forgotPwdSchema);
-module.exports = {forgotPwdModel};
+const ForgotPwdModel = mongoose.model('ForgotPwd',forgotPwdSchema);
+module.exports = {ForgotPwdModel};
