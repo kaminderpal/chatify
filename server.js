@@ -39,6 +39,8 @@ const profile  = require('./routes/profile');
 const contacts = require('./routes/contacts');
 const message  = require('./routes/message');
 const participants = require('./routes/participants');
+const forgotPwd = require('./routes/forgotPwd');
+// const resetPwd  = require('./routes/resetPwd');
 
 // rest api
 app.use(API_VERSION + 'login',login);
@@ -47,7 +49,10 @@ app.use(API_VERSION + 'profile',profile);
 app.use(API_VERSION + 'contacts',contacts);
 app.use(API_VERSION + 'messages',message);
 app.use(API_VERSION + 'participants',participants);
+app.use(API_VERSION + 'forgotpwd',forgotPwd);
+// app.use(API_VERSION + 'resetPwd',resetPwd);
 
+//server listner port.
 server.listen(PORT, ()=>{
      console.log(`Server is listening at ${PORT}`);
 })
