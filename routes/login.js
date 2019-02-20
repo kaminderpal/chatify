@@ -8,7 +8,7 @@ router.post("/",async (req,res)=>{
           var result = await Login.getUser(data);
           res.status(200).header('Authorization','Bearer '+ result.token.get('accessToken')).send({user : result,message:'login success',status: 200});
      }catch(e){
-          res.status(202).send({message : e.message,status:202});
+          res.status(400).send({message : e.message});
      }
 });
 module.exports = router;

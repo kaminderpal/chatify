@@ -2,3 +2,4 @@
 /.vscode
 /package-lock.json
 /config/dev.js
+/config/aws.json

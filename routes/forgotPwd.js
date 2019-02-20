@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const nanoidGenerator = require('nanoid/generate');
 const ForgotPwd = require('../database/Queries/forgotPwd');
+const Email = require('../util/email');
 
 router.post("/", async (req,res)=>{
     const { email } = req.body;
@@ -16,7 +17,7 @@ router.post("/", async (req,res)=>{
                 const token = await nanoidGenerator('1234567890abcdef',16);
                 const model = {email,token};
                 const result = await ForgotPwd.saveForgotPwdUser(model);
-                console.log(result);
+                // Email.sendMail().catch(console.error);
                 //send email to user for reset password link.
             }else{
                 res.status(404).send({error: "User is not registered yet."})
