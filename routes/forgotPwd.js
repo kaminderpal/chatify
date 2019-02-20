@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const nanoidGenerator = require('nanoid/generate');
 const ForgotPwd = require('../database/Queries/forgotPwd');
-const Email = require('../util/email');
 
 router.post("/", async (req,res)=>{
     const { email } = req.body;
